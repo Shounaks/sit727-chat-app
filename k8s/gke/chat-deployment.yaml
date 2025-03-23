@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: chat-app
-          image:  "gcr.io/sit727/chat-app:latest"
+          image:  "shalnark/chat-app:v2"
           imagePullPolicy: Always
 #          resources:
 #            limits:
