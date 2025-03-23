@@ -1,0 +1,7 @@
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: postgres-config
+#data:
+#  POSTGRES_REPLICATION_MODE: "master"
+#  POSTGRES_REPLICA_HOSTS: "postgres-1.postgres-service,postgres-2.postgres-service"
