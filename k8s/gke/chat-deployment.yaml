@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chat-app
+  template:
+    metadata:
+      labels:
+        app: chat-app
+    spec:
+      containers:
+        - name: chat-app
+          image:  "gcr.io/sit727/chat-app:latest"
+          imagePullPolicy: Always
+#          resources:
+#            limits:
+#              cpu: 500m
+#              memory: 512Mi
+#            requests:
+#              cpu: 200m
+#              memory: 256Mi
+          ports:
+            - containerPort: 8080
+          env: # Setting Enviornmental Variables
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: host
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: name
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: postgres_password
