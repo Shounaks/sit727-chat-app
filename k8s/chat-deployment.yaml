@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: chat-app
-          image: shalnark/chat-app:latest
+          image: "shalnark/chat-app:v2" #shalnark/chat-app:latest
           ports:
             - containerPort: 8080
           env:
