@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-replica
+spec:
+  serviceName: "mysql-replica"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-replica
+  template:
+    metadata:
+      labels:
+        app: mysql-replica
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "password"
+        - name: MYSQL_DATABASE
+          value: "mydb"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: data
+          mountPath: "/var/lib/mysql"
+        - name: config
+          mountPath: "/etc/mysql/conf.d"
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: mysql-replica-pvc
+      - name: config
+        configMap:
+          name: mysql-replica-config
